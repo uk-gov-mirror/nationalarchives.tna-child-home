@@ -8,7 +8,7 @@ function tnatheme_globals() {
     global $pre_path;
     global $pre_crumbs;
     $headers = apache_request_headers();
-    if ( isset($_SERVER['HTTP_X_NGINX_PROXY']) && isset($headers['X_HOST_TYPE']) && $headers['X_HOST_TYPE'] == 'public' ) {
+    if ( isset($_SERVER['HTTP_X_NGINX_PROXY']) && isset($headers['X-Host-Type']) && $headers['X-Host-Type'] == 'public' ) {
         $pre_crumbs = '';
         $pre_path = '';
     } elseif (substr($_SERVER['REMOTE_ADDR'], 0, 3) === '10.') {
@@ -86,7 +86,7 @@ add_filter( 'rest_authentication_errors', function( $result ) {
     if ( true === $result || is_wp_error( $result ) ) {
         return $result;
     }
- 
+
     // No authentication has been performed yet.
     // Return an error if user is not logged in.
     if ( ! is_user_logged_in() ) {
@@ -96,7 +96,7 @@ add_filter( 'rest_authentication_errors', function( $result ) {
             array( 'status' => 401 )
         );
     }
- 
+
     // Our custom authentication check should have no effect
     // on logged-in requests
     return $result;
